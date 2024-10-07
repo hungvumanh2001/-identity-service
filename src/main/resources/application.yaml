@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /identity   #su dung khi co nhieu microservice, thi se tim su dung dung path nay de tim kiem
+
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/identity_service"
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update    #tu dong tao table
+    show-sql: true
+jwt:
+  signerKey: "T0swToWRvTU77Vb/O/pEJwNIxk0K+m8J0tSp/1leawO/pqu7dW7S64YZHgGlv6xI"
