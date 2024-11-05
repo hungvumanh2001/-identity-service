@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @PostAuthorize("returnObject.username == authentication.name")
     @GetMapping("/{userId}")
     public UserResponse getUsers(@PathVariable String userId) {
         return userService.getUserById(userId);
@@ -49,5 +51,12 @@ public class UserController {
     public String deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
         return "User deleted";
+    }
+
+    @GetMapping("/my-info")
+    ApiResponse<UserResponse> getMyInfo() {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getMyInfo())
+                .build();
     }
 }
