@@ -29,7 +29,7 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     public User createUser(UserCreationRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXITED);
+        if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
 
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -64,7 +64,7 @@ public class UserService {
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
 
-        User user = userRepository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));
+        User user = userRepository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         return userMapper.toUserResponse(user);
     }
