@@ -8,6 +8,7 @@ import com.example.identity_service.entity.User;
 import com.example.identity_service.exception.AppException;
 import com.example.identity_service.exception.ErrorCode;
 import com.example.identity_service.mapper.UserMapper;
+import com.example.identity_service.repository.RoleRepository;
 import com.example.identity_service.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserRepository userRepository;
+    RoleRepository roleRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
@@ -47,12 +49,17 @@ public class UserService {
     }
 
     public UserResponse getUserById(String id) {
-        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found")));
+        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
-        User user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         userMapper.updateUser(user, request);
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
