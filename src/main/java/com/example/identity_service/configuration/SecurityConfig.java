@@ -1,6 +1,5 @@
 package com.example.identity_service.configuration;
 
-import com.example.identity_service.enums.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
