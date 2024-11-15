@@ -2,6 +2,7 @@ package com.example.identity_service.service;
 
 import com.example.identity_service.dto.request.AuthenticationRequest;
 import com.example.identity_service.dto.request.IntrospectRequest;
+import com.example.identity_service.dto.request.LogoutRequest;
 import com.example.identity_service.dto.response.AuthenticationResponse;
 import com.example.identity_service.dto.response.IntrospectResponse;
 import com.example.identity_service.entity.User;
@@ -30,6 +31,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +71,7 @@ public class AuthenticationService {
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
+                .jwtID(UUID.randomUUID().toString())    //them id de phuc vu cho viec logout
                 .claim("scope",buildScope(user))    //custom truyen scope = role cua user
                 .build();
 
@@ -114,5 +117,9 @@ public class AuthenticationService {
             });
 
         return stringJoiner.toString();
+    }
+
+    public void logout(LogoutRequest request){
+
     }
 }
