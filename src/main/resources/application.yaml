@@ -14,3 +14,5 @@ spring:
     show-sql: true
 jwt:
   signerKey: "T0swToWRvTU77Vb/O/pEJwNIxk0K+m8J0tSp/1leawO/pqu7dW7S64YZHgGlv6xI"
+  valid-duration: 3600 # in second
+  refreshable-duration: 36000 # in seconds
