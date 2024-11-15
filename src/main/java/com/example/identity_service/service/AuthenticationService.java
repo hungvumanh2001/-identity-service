@@ -155,7 +155,8 @@ public class AuthenticationService {
 
         var verified = signedJWT.verify(verifier);
 
-        if (!(verified && expiryTime.after(new Date()))) throw new AppException(ErrorCode.UNAUTHENTICATED);
+        if (!(verified && expiryTime.after(new Date())))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))  //neu logout roi thi token se duoc luu vao bang nay. ktra trong bang xem da logout chua
             throw new AppException(ErrorCode.UNAUTHENTICATED);
