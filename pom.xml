@@ -172,10 +172,10 @@
 				</executions>
 				<configuration>
 					<excludes>
-						<exclude>com/devteria/identityservice/dto/**</exclude>
-						<exclude>com/devteria/identityservice/entity/**</exclude>
-						<exclude>com/devteria/identityservice/mapper/**</exclude>
-						<exclude>com/devteria/identityservice/configuration/**</exclude>
+						<exclude>com/example/identity_service/dto/**</exclude>
+						<exclude>com/example/identity_service/entity/**</exclude>
+						<exclude>com/example/identity_service/mapper/**</exclude>
+						<exclude>com/example/identity_service/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
