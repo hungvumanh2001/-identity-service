@@ -8,6 +8,8 @@ import com.example.identity_service.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -92,7 +94,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @WithMockUser(username = "john")
+    @WithMockUser(username = "john")    //mock user cua doan authen
     void getMyInfo_valid_success() {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
 
