@@ -1,11 +1,7 @@
 package com.example.identity_service.controller;
 
-import com.example.identity_service.dto.request.UserCreationRequest;
-import com.example.identity_service.dto.response.UserResponse;
-import com.example.identity_service.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -20,11 +16,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDate;
+import com.example.identity_service.dto.request.UserCreationRequest;
+import com.example.identity_service.dto.response.UserResponse;
+import com.example.identity_service.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest
-@AutoConfigureMockMvc   //giup tao mock request toi controller
+@AutoConfigureMockMvc // giup tao mock request toi controller
 @TestPropertySource("/test.properties")
 public class UserControllerTest {
 
@@ -34,12 +36,12 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
-    private UserCreationRequest request;    //mock request
-    private UserResponse userResponse;  //mock response
+    private UserCreationRequest request; // mock request
+    private UserResponse userResponse; // mock response
     private LocalDate dob;
 
     @BeforeEach
-    void initData() {   //ham khoi tao data chay truoc method test
+    void initData() { // ham khoi tao data chay truoc method test
         dob = LocalDate.of(1990, 1, 1);
 
         request = UserCreationRequest.builder()
@@ -66,13 +68,14 @@ public class UserControllerTest {
         objectMapper.registerModule(new JavaTimeModule());
         String content = objectMapper.writeValueAsString(request);
 
-        Mockito.when(userService.createUser(ArgumentMatchers.any())).thenReturn(userResponse);  //mock khi userService goi den ham createUser()
+        Mockito.when(userService.createUser(ArgumentMatchers.any()))
+                .thenReturn(userResponse); // mock khi userService goi den ham createUser()
 
         // WHEN, THEN: khi when xay ra thi chung ta se expect dieu gi
-        mockMvc.perform(MockMvcRequestBuilders.post("/users")   //path
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)      //type json
-                        .content(content))  //request truyen vao
-                .andExpect(MockMvcResultMatchers.status().isOk())   //status tra ve 200
+        mockMvc.perform(MockMvcRequestBuilders.post("/users") // path
+                        .contentType(MediaType.APPLICATION_JSON_VALUE) // type json
+                        .content(content)) // request truyen vao
+                .andExpect(MockMvcResultMatchers.status().isOk()) // status tra ve 200
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value(1000))
                 .andExpect(MockMvcResultMatchers.jsonPath("result.id").value("cf0600f538b3"));
     }

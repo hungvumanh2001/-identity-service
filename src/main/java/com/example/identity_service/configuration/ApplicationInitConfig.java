@@ -1,22 +1,24 @@
 package com.example.identity_service.configuration;
 
-import com.example.identity_service.entity.Role;
-import com.example.identity_service.entity.User;
-import com.example.identity_service.enums.PredefinedRole;
-import com.example.identity_service.repository.RoleRepository;
-import com.example.identity_service.repository.UserRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashSet;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
+import com.example.identity_service.entity.Role;
+import com.example.identity_service.entity.User;
+import com.example.identity_service.enums.PredefinedRole;
+import com.example.identity_service.repository.RoleRepository;
+import com.example.identity_service.repository.UserRepository;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @RequiredArgsConstructor
@@ -36,11 +38,12 @@ public class ApplicationInitConfig {
     @ConditionalOnProperty(
             prefix = "spring",
             value = "datasource.driverClassName",
-            havingValue = "com.mysql.cj.jdbc.Driver")   //dieu kien khi khoi tao bean, de khi UnitTest chay khong khoi tao bean nay len, tranh bi loi
+            havingValue =
+                    "com.mysql.cj.jdbc.Driver") // dieu kien khi khoi tao bean, de khi UnitTest chay khong khoi tao bean nay len, tranh bi loi
     ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
         log.info("Init application......");
         return args -> {
-            if(userRepository.findByUsername("admin").isEmpty()){
+            if (userRepository.findByUsername("admin").isEmpty()) {
                 roleRepository.save(Role.builder()
                         .name(PredefinedRole.USER_ROLE)
                         .description("User role")
