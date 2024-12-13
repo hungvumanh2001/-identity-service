@@ -1,4 +1,5 @@
 # nhung cau hinh thay doi tren moi truong production
 jwt:
+  signerKey: "Lvws5erKIainI7o5AcJ/tl94A2L+NxjpAyucUnp1+w4Nus+CA6lRRnlnIqLfEAFz"
   valid-duration: 7200 # in second
   refreshable-duration: 72000 # in seconds
