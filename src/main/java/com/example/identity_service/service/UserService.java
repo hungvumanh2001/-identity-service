@@ -47,7 +47,7 @@ public class UserService {
         try {
             user = userRepository.save(user);
         } catch (DataIntegrityViolationException exception) {
-            throw new AppException(ErrorCode.USER_EXISTED);
+            throw new AppException(ErrorCode.USER_EXISTED); //neu xay ra catch la bi trung username
         }
 
         return userMapper.toUserResponse(user);
