@@ -5,10 +5,10 @@ server:
 
 spring:
   datasource:
-    url: "jdbc:mysql://localhost:3306/identity_service"
+    url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3306/identity_service}  #cau hinh trong bien moi truong neu khong co thi lay gia tri mac dinh o dang sau dau ":"
     driverClassName: "com.mysql.cj.jdbc.Driver"
-    username: root
-    password: root
+    password: ${DBMS_PASSWORD:root} #cau hinh trong bien moi truong neu khong co thi lay gia tri mac dinh o dang sau dau ":"
+    username: ${DBMS_USERNAME:root} #cau hinh trong bien moi truong neu khong co thi lay gia tri mac dinh o dang sau dau ":"
   jpa:
     hibernate:
       ddl-auto: update    #tu dong tao table
