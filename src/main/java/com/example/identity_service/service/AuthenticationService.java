@@ -59,7 +59,7 @@ public class AuthenticationService {
     protected long REFRESHABLE_DURATION;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        log.info("SINGER_KEY: "+ SINGER_KEY);
+        log.info("SINGER_KEY: " + SINGER_KEY);
         User user = userRepository
                 .findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));

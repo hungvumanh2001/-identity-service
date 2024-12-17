@@ -39,7 +39,8 @@ public class ApplicationInitConfig {
             prefix = "spring",
             value = "datasource.driverClassName",
             havingValue =
-                    "com.mysql.cj.jdbc.Driver") // dieu kien khi khoi tao bean, de khi UnitTest chay khong khoi tao bean nay len, tranh bi loi
+                    "com.mysql.cj.jdbc.Driver") // dieu kien khi khoi tao bean, de khi UnitTest chay khong khoi tao bean
+    // nay len, tranh bi loi
     ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
         log.info("Init application......");
         return args -> {
